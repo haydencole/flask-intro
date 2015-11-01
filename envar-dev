@@ -1,0 +1,5 @@
+# environment variables for development environment
+# run using 'source' to add variables in terminal session
+
+export DATABASE_URL="postgresql:///discover_flask_dev"
+export APP_SETTINGS="config.DevelopmentConfig"
