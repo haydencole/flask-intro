@@ -1,20 +1,25 @@
-# imports
+#################
+#### imports ####
+#################
+
 from flask import flash, redirect, render_template, request, \
     session, url_for, Blueprint
-from app import app
-from flask.ext.bcrypt import Bcrypt
 from functools import wraps
 
+################
+#### config ####
+################
 
-# config
-bcrypt = Bcrypt(app)
 users_blueprint = Blueprint(
     'users', __name__,
     template_folder='templates'
 )
 
+##########################
+#### helper functions ####
+##########################
 
-# helper functions
+
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
@@ -26,7 +31,10 @@ def login_required(test):
     return wrap
 
 
-# routes
+################
+#### routes ####
+################
+
 # route for handling the login page logic
 @users_blueprint.route('/login', methods=['GET', 'POST'])
 def login():
@@ -38,7 +46,7 @@ def login():
         else:
             session['logged_in'] = True
             flash('You were logged in.')
-            return redirect(url_for('home'))
+            return redirect(url_for('home.home'))
     return render_template('login.html', error=error)
 
 
@@ -47,4 +55,4 @@ def login():
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out.')
-    return redirect(url_for('welcome'))
+    return redirect(url_for('home.welcome'))
